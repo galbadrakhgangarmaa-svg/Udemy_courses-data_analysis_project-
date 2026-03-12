@@ -1,0 +1,38 @@
+--1.  Cleaned null datas from dataset, there is 5 courses with course id and name but no other information, so we exclude the null data for preventing issues for next steps
+  2.  Make new column by price_range, subscribers range, review range for next level data visualization and exploration
+  3.  Get make new column for published year and month 
+
+SELECT 
+  course_id,
+  course_title,
+  is_paid,
+  price, 
+  CASE 
+    WHEN price = 0 THEN 'Free'
+    WHEN price >0 and price <=50 THEN '0-50usd'
+    WHEN price >50 and price <=100 THEN '50-100usd'
+    WHEN price >100 THEN '>100usd'
+  END as price_range,
+  num_subscribers,
+  CASE 
+    WHEN num_subscribers > 0 and num_subscribers <= 1000 THEN 'Low subs'
+    WHEN num_subscribers > 1000 and num_subscribers <= 3000 THEN 'Medium subs'
+    WHEN num_subscribers > 3000 and num_subscribers <= 5000 THEN 'High subs'
+    WHEN num_subscribers > 5000 THEN 'Very High subs'
+  END as subscribers_range,
+num_reviews,
+CASE 
+  WHEN num_reviews >0 and num_reviews<=300 then 'Low engagement'
+  WHEN num_reviews >300 and num_reviews<=600 then 'Medium engagement'
+  WHEN num_reviews >600 and num_reviews<=900 then 'High engagement'
+  ELSE 'Very high engagement'
+  END as review_range,
+num_lectures,
+level,
+content_duration,
+YEAR(published_timestamp) as year,
+MONTH(published_timestamp) as month,
+subject,
+published_timestamp
+FROM udemy_courses
+where is_paid is not null
