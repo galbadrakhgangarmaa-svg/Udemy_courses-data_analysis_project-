@@ -1,0 +1,45 @@
+--- 1. Do course with more lectures get more reviews?
+SELECT 
+  lectures_bin,
+  sum(num_reviews) as reviews
+FROM udemy_report
+GROUP By lectures_bin
+ORDER By lectures_bin
+
+-- 2. Do longer courses generates more reviews?
+
+SELECT 
+  duration_bin,
+  sum(num_reviews) as reviews
+FROM udemy_report
+GROUP BY duration_bin
+ORDER BY duration_bin
+
+-- 3. What is the relationshion between subs and reviews?
+-- Here we used Sub query, Window function to calculate difference between years for subs, reviews as percentage
+
+SELECT 
+  year,
+  subs,
+  ROUND(((LEAD(subs) OVER (ORDER BY year) - subs)/subs)*100,2) as sub_change,
+  reviews,
+  ROUND(((LEAD(reviews) OVER (ORDER BY year) - reviews)/reviews)*100,2) as review_change
+FROM (
+    SELECT 
+      year, 
+      sum(num_subscribers) as subs,
+      sum(num_reviews) as reviews
+    FROM udemy_report
+    GROUP BY year
+    ORDER BY year)s
+
+
+-- 4. Which courses have high subscribers but low reviews
+
+SELECT 
+ course_title,
+ num_subscribers,
+ subscribers_range,
+ num_reviews,
+ review_range
+FROM udemy_report
