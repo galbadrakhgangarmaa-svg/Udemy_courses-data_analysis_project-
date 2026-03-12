@@ -1,9 +1,9 @@
 --1.  Cleaned null datas from dataset, there is 5 courses with course id and name but no other information, so we exclude the null data for preventing issues for next steps
-  2.  Make new column by price_range, subscribers range, review range for next level data visualization and exploration
+  2.  Make new column by price_range, subscribers range, review range, duration range, lecture range for next level data visualization and exploration
   3.  Get make new column for published year and month 
 4. Create view as udemy cleaned
 
-CREATE VIEW udemy_cleanes AS 
+CREATE VIEW udemy_report AS 
 
 SELECT 
   course_id,
@@ -31,10 +31,27 @@ CASE
   ELSE 'Very high engagement'
   END as review_range,
 num_lectures,
+ Case 
+       WHEN num_lectures >0 and num_lectures <=30 THEN '0-30'
+       WHEN num_lectures >30 and num_lectures <=60 THEN '30-60'
+       WHEN num_lectures >60 and num_lectures <=160 THEN '60-160'
+       ELSE 'more than 160'
+       END lectures_bin,
 level,
 content_duration,
+ CASE
+       WHEN content_duration <= 10 THEN '0-10'
+       WHEN content_duration > 10 AND content_duration <= 25 THEN '10-25'
+       WHEN content_duration > 20 AND content_duration <=35 THEN '25-35'
+       WHEN content_duration > 30 AND content_duration <=45 THEN '35-45'
+       else 'more than 45'
+       end as duration_bin,
 YEAR(published_timestamp) as year,
 MONTH(published_timestamp) as month,
+subject,
+published_timestamp
+FROM udemy_courses
+where is_paid is not null
 subject,
 published_timestamp
 FROM udemy_courses
