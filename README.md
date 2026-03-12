@@ -30,7 +30,10 @@ Data analysis sections :
     4.2 Which years had the most successful courses?
     4.3 Are newer courses getting more students?
     4.4 Is the average course duration increasing over time?
-5. Identify top 10
+6. Identify top 10
     5.1 TOP 10 courses by subs
     5.2 TOP 10 courses by reviews
 
+HERE YOU CAN SEE DATA VISUALIZATIONS RELATED TO THE THIS DATA ANALYSIS:
+ 1.  DATA BRICK - https://dbc-2bcc7dda-55de.cloud.databricks.com/dashboardsv3/01f11c715bf113d89c09535e0d13fa36/published?o=7474655105530413&f_27b55e57%7Eprice-vs-subscribes=%7B%22columns%22%3A%5B%22color%22%5D%2C%22rows%22%3A%5B%5B%22false%22%5D%5D%7D
+2. TABLEAU - 
