@@ -23,7 +23,7 @@ SELECT
   duration_bin,
   sum(num_subscribers) as subs,
   (SELECT sum(num_subscribers) FROM udemy_report) as total_subs,
-  ROUND(sum(num_subscribers) * 100.0 / (SELECT sum(num_subscribers) FROM udemy_report),2) as lecture_subs
+  ROUND(sum(num_subscribers) * 100.0 / (SELECT sum(num_subscribers) FROM udemy_report),2) as duration_subs
 FROM udemy_report
 GROUP BY duration_bin
 
