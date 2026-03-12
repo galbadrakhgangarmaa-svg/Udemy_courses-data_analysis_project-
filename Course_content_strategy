@@ -7,23 +7,23 @@ SELECT
 FROM udemy_cleaned
 GROUP BY subject
 
--- 2. Do courses with more lectures get more students 
--- 3. Also using following query we can define that how many courses in each lecture range
- select 
-    Case 
-       WHEN num_lectures >0 and num_lectures <=30 THEN '1: 0-30'
-       WHEN num_lectures >30 and num_lectures <=60 THEN '2: 30-60'
-       WHEN num_lectures >60 and num_lectures <=160 THEN '3: 60-160'
-       WHEN num_lectures >160 and num_lectures <=300 THEN '4: 160-300'
-       WHEN num_lectures >300 and num_lectures <=500 THEN '5: 300-500'
-       ELSE '6: more than 500'
-       END lectures_bin,
-count(num_lectures), -- how many courses in each category
-(select count(num_lectures) from udemy_courses) as total_courses, -- count total course number
-round(count(num_lectures) * 100.0 / (select count(num_lectures) from udemy_courses),2) as lectures_pct, -- calculate the percentage of each lecture bin category in total
-sum(num_subscribers),
-(select sum(num_subscribers) from udemy_courses) as total_subs,
-round(sum(num_subscribers) * 100.0 / (select sum(num_subscribers) from udemy_courses),2) as subs_pct,
-from udemy_courses
-group by lectures_bin
-order by lectures_bin asc
+-- 2. Do courses with more lectures get more students
+
+SELECT 
+  lectures_bin,
+  sum(num_subscribers) as subs,
+  (SELECT sum(num_subscribers) FROM udemy_report) as total_subs,
+  ROUND(sum(num_subscribers) * 100.0 / (SELECT sum(num_subscribers) FROM udemy_report),2) as lecture_subs
+FROM udemy_report
+GROUP BY lectures_bin
+
+--3. Does course duration affect course popularity
+
+SELECT 
+  duration_bin,
+  sum(num_subscribers) as subs,
+  (SELECT sum(num_subscribers) FROM udemy_report) as total_subs,
+  ROUND(sum(num_subscribers) * 100.0 / (SELECT sum(num_subscribers) FROM udemy_report),2) as lecture_subs
+FROM udemy_report
+GROUP BY duration_bin
+
