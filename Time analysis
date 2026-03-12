@@ -1,0 +1,30 @@
+-- 1. How was the number of courses changed over time? 
+
+
+SELECT 
+ year, 
+ count(course_id)
+FROM udemy_report
+GROUP BY year
+ORDER BY year
+
+-- 2. Which years had the most successgul courses? Are newer courses getting more subscribers?
+
+SELECT 
+ year, 
+ count(course_id),
+ sum(num_subscribers),
+ sum(num_reviews)
+FROM udemy_report
+GROUP BY year
+
+-- 3. Is the average course duration increasing over time?
+
+SELECT 
+ year, 
+ round(avg(content_duration),2) as avg_duration
+FROM udemy_report
+GROUP BY year
+ORDER BY year
+
+
