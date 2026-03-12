@@ -1,0 +1,15 @@
+-- 1. Which level has the most subscribers
+
+SELECT 
+  level,
+  sum(num_subscribers) as subs
+FROM udemy_report
+GROUP BY level
+
+--2. Which level recieves the highest reviews per course
+
+SELECT 
+  level,
+  sum(num_reviews) as reviews
+FROM udemy_report
+GROUP BY level
