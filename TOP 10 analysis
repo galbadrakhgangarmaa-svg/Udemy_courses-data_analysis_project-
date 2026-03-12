@@ -1,0 +1,21 @@
+-- 1. TOP 10 courses by subscribers
+
+SELECT 
+ course_title,
+ subject,
+ sum(num_subscribers) as total_subs
+FROM udemy_report
+GROUP BY course_title, subject
+ORDER BY sum(num_subscribers) DESC
+LIMIT 10
+
+-- 2.  TOP 10 courses by reviews
+
+SELECT 
+ course_title,
+ subject,
+ sum(num_reviews) as total_rev
+FROM udemy_report
+GROUP BY course_title, subject
+ORDER BY sum(num_reviews) DESC
+LIMIT 10
